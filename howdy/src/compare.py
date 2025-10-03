@@ -25,7 +25,9 @@ import _thread as thread
 import paths_factory
 from recorders.video_capture import VideoCapture
 from i18n import _
+import  csv
 
+logfile = "/var/log/howdystats"
 def exit(code=None):
 	"""Exit while closing howdy-gtk properly"""
 	global gtk_proc
@@ -324,7 +326,16 @@ while True:
 		if 0 < match < video_certainty:
 			timings["tt"] = time.time() - timings["st"]
 			timings["fl"] = time.time() - timings["fr"]
-
+			try:
+				with open(logfile, "a", newline="") as f:
+					writer = csv.writer(f)
+					writer.writerow([
+						datetime.now().isoformat(timespec="seconds"),
+						match_index,
+						models[match_index]["label"]
+					])
+			except Exception:
+				pass
 			# If set to true in the config, print debug text
 			if end_report:
 				def print_timing(label, k):
