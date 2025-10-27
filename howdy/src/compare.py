@@ -103,8 +103,10 @@ if len(sys.argv) < 2:
 
 # The username of the user being authenticated
 user = sys.argv[1]
-# Define log file with per-user path
-logfile = f"/var/log/howdystats_{user}"
+# Define log file in user's .config directory
+config_dir = os.path.expanduser('~/.config/howdy')
+os.makedirs(config_dir, exist_ok=True)  # Create config dir if it doesn't exist
+logfile = os.path.join(config_dir, f"howdystats_{user}.csv")
 # The model file contents
 models = []
 # Encoded face models
