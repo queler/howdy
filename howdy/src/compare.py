@@ -27,7 +27,6 @@ from recorders.video_capture import VideoCapture
 from i18n import _
 import  csv
 
-logfile = "/var/log/howdystats"
 def exit(code=None):
 	"""Exit while closing howdy-gtk properly"""
 	global gtk_proc
@@ -104,6 +103,8 @@ if len(sys.argv) < 2:
 
 # The username of the user being authenticated
 user = sys.argv[1]
+# Define log file with per-user path
+logfile = f"/var/log/howdystats_{user}"
 # The model file contents
 models = []
 # Encoded face models
